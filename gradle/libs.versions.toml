@@ -10,6 +10,7 @@ appcompat = "1.7.0"
 material = "1.12.0"
 activity = "1.10.1"
 constraintlayout = "2.2.1"
+picasso = "2.71828"
 pokemonTcgSdkKotlin = "1.0.0"
 volley = "1.2.1"
 
@@ -23,6 +24,7 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
 pokemon-tcg-sdk-kotlin = { module = "io.pokemontcg:pokemon-tcg-sdk-kotlin", version.ref = "pokemonTcgSdkKotlin" }
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 

@@ -1,43 +1,45 @@
 package com.nathan.pokemonpricetracker
 
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import android.widget.GridView
-import android.widget.ListView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.android.volley.Request
-import com.android.volley.RequestQueue
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.nathan.pokemonpricetracker.data.model.Pokemon
 import com.nathan.pokemonpricetracker.data.remote.APIController
-import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
-    lateinit var lstPokemons: GridView
-    lateinit var adapter: ArrayAdapter<Pokemon>
-    lateinit var pokemons: ArrayList<Pokemon>
+
+    private lateinit var lstPokemons: GridView // Declare GridView
+    private lateinit var pokemons: ArrayList<Pokemon> // Declare the list of Pokémon
+    private lateinit var adapter: PokemonAdapter // Declare the custom adapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
+        // Set window insets for edge-to-edge support
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        // Initialize the GridView
         lstPokemons = findViewById(R.id.gv_pokemons)
 
+        // Fetch the Pokémon data asynchronously
         val ac = APIController(this)
         ac.getData { fetchedPokemons ->
+            // Ensure the pokemons list is populated
             pokemons = fetchedPokemons
-            adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, pokemons)
+
+            // Initialize the custom adapter with the fetched data
+            adapter = PokemonAdapter(this, pokemons)
+            // Set the adapter to the GridView
             lstPokemons.adapter = adapter
         }
-
     }
 }
