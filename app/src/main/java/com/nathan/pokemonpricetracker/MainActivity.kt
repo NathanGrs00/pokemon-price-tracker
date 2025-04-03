@@ -1,5 +1,6 @@
 package com.nathan.pokemonpricetracker
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.GridView
 import androidx.activity.enableEdgeToEdge
@@ -8,6 +9,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.nathan.pokemonpricetracker.data.model.Pokemon
 import com.nathan.pokemonpricetracker.data.remote.APIController
+import com.nathan.pokemonpricetracker.ui.DetailActivity
+import com.nathan.pokemonpricetracker.ui.PokemonAdapter
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,6 +43,20 @@ class MainActivity : AppCompatActivity() {
             adapter = PokemonAdapter(this, pokemons)
             // Set the adapter to the GridView
             lstPokemons.adapter = adapter
+        }
+
+        lstPokemons.setOnItemClickListener { _, _, position, _ ->
+            val selectedPokemon = pokemons[position]
+
+            val intent = Intent(this, DetailActivity::class.java)
+            intent.putExtra("name", selectedPokemon.name)
+            intent.putExtra("image", selectedPokemon.images.large)
+            val pokemon = Pokemon(
+                selectedPokemon.name,
+                selectedPokemon.images
+            )
+
+            startActivity(intent)
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.nathan.pokemonpricetracker
+package com.nathan.pokemonpricetracker.ui
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.nathan.pokemonpricetracker.R
 import com.nathan.pokemonpricetracker.data.model.Pokemon
 import com.squareup.picasso.Picasso
 
