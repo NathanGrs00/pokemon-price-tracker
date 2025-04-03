@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         lstPokemons = findViewById(R.id.gv_pokemons)
 
         // Fetch the Pokémon data asynchronously
-        val ac = APIController(this)
+        val ac = APIController(this, "Pikachu") // TODO: Replace with dynamic name
         ac.getData { fetchedPokemons ->
             // Ensure the pokemons list is populated
             pokemons = fetchedPokemons

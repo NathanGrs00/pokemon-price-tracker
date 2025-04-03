@@ -10,9 +10,9 @@ import com.google.gson.reflect.TypeToken
 import com.nathan.pokemonpricetracker.data.model.Pokemon
 import org.json.JSONObject
 
-class APIController(var context: Context) {
+class APIController(var context: Context, var pokemonName: String) {
     fun getData(callback: (ArrayList<Pokemon>) -> Unit){
-        val url = "https://api.pokemontcg.io/v2/cards"
+        val url = "https://api.pokemontcg.io/v2/cards?q=name:$pokemonName"
         val gson = Gson()
         val queue: RequestQueue = Volley.newRequestQueue(context)
 
