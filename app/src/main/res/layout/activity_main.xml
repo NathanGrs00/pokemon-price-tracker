@@ -8,55 +8,89 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pokemon Price Tracker" />
+        android:weightSum="10"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="51dp">
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:weightSum="3">
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:background="#D5423A"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:weightSum="7">
 
-            <EditText
-                android:id="@+id/etSearchPokemon"
+            <TextView
+                android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:ems="10"
-                android:hint="@string/placeholder"
-                android:inputType="text"
-                tools:visibility="visible" />
+                android:text="Pokemon Price Tracker"
+                android:textColor="#F2F1F1"
+                android:textSize="30sp"
+                android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btnSearch"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Search" />
+                android:layout_weight="2"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="5">
+
+                <EditText
+                    android:id="@+id/etSearchPokemon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:backgroundTint="#ECECED"
+                    android:ems="10"
+                    android:hint="@string/placeholder"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:textColorHint="#E9E7E7"
+                    android:textSize="20sp"
+                    tools:visibility="visible" />
+
+                <Button
+                    android:id="@+id/btnSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="#EDE8E8"
+                    android:text="Search"
+                    android:textColor="#C84137" />
+
+            </LinearLayout>
+
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/pb_loading"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight=".7"
+            android:visibility="invisible" />
 
         <GridView
             android:id="@+id/gv_pokemons"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_height="0dp"
+            android:layout_weight="7.5"
             android:gravity="center"
-            android:numColumns="3" />
+            android:numColumns="3">
+
+        </GridView>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
