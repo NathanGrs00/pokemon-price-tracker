@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Pokemon Price Tracker</string>
+    <string name="placeholder">Search for a pokemon...</string>
 </resources>

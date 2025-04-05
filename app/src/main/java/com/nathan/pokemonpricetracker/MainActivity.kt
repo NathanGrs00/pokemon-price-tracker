@@ -2,6 +2,8 @@ package com.nathan.pokemonpricetracker
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
 import android.widget.GridView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -34,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         lstPokemons = findViewById(R.id.gv_pokemons)
 
         // Fetch the Pokémon data asynchronously
-        val ac = APIController(this, "Pikachu") // TODO: Replace with dynamic name
+        val ac = APIController(this, "Mew") // TODO: Replace with dynamic name
         ac.getData { fetchedPokemons ->
             // Ensure the pokemons list is populated
             pokemons = fetchedPokemons
@@ -44,6 +46,11 @@ class MainActivity : AppCompatActivity() {
             // Set the adapter to the GridView
             lstPokemons.adapter = adapter
         }
+
+
+        val editTextPokemon = findViewById<EditText>(R.id.etSearchPokemon)
+        val btnSearch = findViewById<Button>(R.id.btnSearch)
+        editTextPokemon.text
 
         lstPokemons.setOnItemClickListener { _, _, position, _ ->
             val selectedPokemon = pokemons[position]

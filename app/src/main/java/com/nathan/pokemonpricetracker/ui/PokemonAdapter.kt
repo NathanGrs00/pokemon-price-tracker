@@ -33,8 +33,7 @@ class PokemonAdapter(context: Context, private val pokemons: List<Pokemon>) : Ba
         // Set the Pokémon name
         nameTextView.text = pokemon.name
 
-        // Load the Pokémon image using Picasso or Glide
-        Picasso.get().load(pokemon.images.small).into(imageView) // or .large for a larger image
+        Picasso.get().load(pokemon.images.small).into(imageView)
 
         return view
     }
