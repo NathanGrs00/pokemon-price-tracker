@@ -1,0 +1,43 @@
+name: Build
+
+# Every push and pull request: run the tests and build the APK.
+# Pushing a version tag (for example v1.0.0) also publishes a GitHub release with the APK.
+on:
+  push:
+    branches: [master, develop]
+    tags: ['v*']
+  pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Test and build APK
+        run: ./gradlew testReleaseUnitTest assembleRelease
+
+      - name: Name the APK
+        run: mv app/build/outputs/apk/release/app-release.apk PokemonPriceTracker-${{ github.ref_type == 'tag' && github.ref_name || 'dev' }}.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PokemonPriceTracker-apk
+          path: PokemonPriceTracker-*.apk
+
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: PokemonPriceTracker-*.apk
+          generate_release_notes: true

@@ -14,12 +14,14 @@ android {
         minSdk = 24
         targetSdk = 35
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.0"
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
+            // Signed with the build machine's debug key, so releases need no secrets or setup.
+            signingConfig = signingConfigs.getByName("debug")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
