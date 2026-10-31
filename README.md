@@ -39,8 +39,9 @@ Open the project in Android Studio and run the `app` configuration.
 Run the unit tests with `./gradlew test`.
 
 GitHub Actions builds and tests every push. To publish a release, bump `versionCode` and
-`versionName` in `app/build.gradle.kts` and push a tag such as `v1.0.1`: the workflow
-attaches the APK to a new GitHub release.
+`versionName` in `app/build.gradle.kts`, then on GitHub open **Actions > Build > Run workflow**
+and type the version (for example `v1.0.1`). Pushing a tag like `v1.0.1` works too. The
+workflow tags the commit and attaches the APK to a new GitHub release.
 
 ## Project structure
 
