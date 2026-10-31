@@ -11,9 +11,12 @@
     <string name="no_market_prices">No market prices available for this card.</string>
 
     <string name="graded_prices">Graded · eBay sales</string>
-    <string name="graded_missing_api_key">Add a free PokemonPriceTracker API key as PRICE_TRACKER_API_KEY in local.properties to see PSA graded prices.</string>
+    <string name="graded_missing_api_key">Paste your free PokemonPriceTracker API key to see PSA graded prices.</string>
     <string name="graded_not_available">No graded sales found for this card.</string>
-    <string name="graded_error">Couldn\'t load graded prices.</string>
+    <string name="graded_error">Couldn\'t load graded prices. Check your API key and connection.</string>
+    <string name="api_key_label">API key</string>
+    <string name="get_api_key">Get a free key</string>
+    <string name="save">Save</string>
     <plurals name="sales_count">
         <item quantity="one">%1$d sale</item>
         <item quantity="other">%1$d sales</item>

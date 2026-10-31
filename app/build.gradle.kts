@@ -1,16 +1,8 @@
-import java.util.Properties
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
-}
-
-// The PokemonPriceTracker API key lives in local.properties so it never gets committed.
-val localProperties = Properties().apply {
-    val file = rootProject.file("local.properties")
-    if (file.exists()) file.inputStream().use { load(it) }
 }
 
 android {
@@ -23,9 +15,6 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-
-        val priceTrackerApiKey = localProperties.getProperty("PRICE_TRACKER_API_KEY", "")
-        buildConfigField("String", "PRICE_TRACKER_API_KEY", "\"$priceTrackerApiKey\"")
     }
 
     buildTypes {
@@ -46,7 +35,6 @@ android {
     }
     buildFeatures {
         compose = true
-        buildConfig = true
     }
 }
 

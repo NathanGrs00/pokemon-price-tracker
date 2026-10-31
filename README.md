@@ -17,11 +17,8 @@ limit, so a slow connection shows a retry button instead of loading forever.
 
 1. Open the project in Android Studio and run the `app` configuration.
 2. Optional, for PSA graded prices: create a free account on PokemonPriceTracker,
-   copy your API key and add it to `local.properties` (this file is not committed):
-
-   ```properties
-   PRICE_TRACKER_API_KEY=your_key_here
-   ```
+   open any card in the app and paste your API key in the "Graded" box.
+   The key is stored on the phone only.
 
    The free tier gives 100 credits a day, and opening a card costs 2 credits
    (about 50 card lookups a day). Without a key the app still shows all market prices.
@@ -34,6 +31,7 @@ app/src/main/java/com/nathan/pokemonpricetracker/
 ├── data/
 │   ├── CardRepository.kt      single entry point for the UI
 │   ├── CardPagingSource.kt    paged search (Paging 3)
+│   ├── local/                 API key stored on the phone
 │   ├── mapper/                API responses -> app models
 │   ├── model/                 app models (cards, price sections)
 │   └── remote/                Retrofit APIs, DTOs, ApiClient

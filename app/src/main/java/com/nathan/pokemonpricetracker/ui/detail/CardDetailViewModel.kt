@@ -2,12 +2,14 @@ package com.nathan.pokemonpricetracker.ui.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.toRoute
 import com.nathan.pokemonpricetracker.data.CardRepository
+import com.nathan.pokemonpricetracker.data.local.ApiKeyStore
 import com.nathan.pokemonpricetracker.data.model.CardDetail
 import com.nathan.pokemonpricetracker.data.model.PriceSection
 import com.nathan.pokemonpricetracker.ui.navigation.CardDetailRoute
@@ -34,6 +36,7 @@ sealed interface GradedPrices {
 class CardDetailViewModel(
     savedStateHandle: SavedStateHandle,
     private val repository: CardRepository,
+    private val apiKeyStore: ApiKeyStore,
 ) : ViewModel() {
 
     private val cardId = savedStateHandle.toRoute<CardDetailRoute>().cardId
@@ -61,11 +64,21 @@ class CardDetailViewModel(
         }
     }
 
+    fun saveApiKey(apiKey: String) {
+        apiKeyStore.priceTrackerApiKey = apiKey
+        val state = _uiState.value as? CardDetailUiState.Success ?: return
+        viewModelScope.launch {
+            _uiState.value = state.copy(gradedPrices = GradedPrices.Loading)
+            _uiState.value = state.copy(gradedPrices = loadGradedPrices(state.card))
+        }
+    }
+
     private suspend fun loadGradedPrices(card: CardDetail): GradedPrices {
-        if (!repository.hasPriceTrackerApiKey) return GradedPrices.MissingApiKey
+        val apiKey = apiKeyStore.priceTrackerApiKey
+        if (apiKey.isBlank()) return GradedPrices.MissingApiKey
         val tcgPlayerId = card.tcgPlayerId ?: return GradedPrices.NotAvailable
         return try {
-            repository.getGradedPrices(tcgPlayerId)
+            repository.getGradedPrices(tcgPlayerId, apiKey)
                 ?.let { GradedPrices.Loaded(it) }
                 ?: GradedPrices.NotAvailable
         } catch (e: Exception) {
@@ -76,7 +89,10 @@ class CardDetailViewModel(
 
     companion object {
         val Factory = viewModelFactory {
-            initializer { CardDetailViewModel(createSavedStateHandle(), CardRepository()) }
+            initializer {
+                val app = checkNotNull(this[APPLICATION_KEY])
+                CardDetailViewModel(createSavedStateHandle(), CardRepository(), ApiKeyStore(app))
+            }
         }
     }
 }
