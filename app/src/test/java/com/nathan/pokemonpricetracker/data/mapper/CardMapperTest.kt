@@ -95,11 +95,31 @@ class CardMapperTest {
 
     @Test
     fun `graded prices also work when data is a single card`() {
+        // Sample response from the PokemonPriceTracker docs (tcgPlayerId lookup).
         val response = ApiClient.json.decodeFromString<JsonObject>(
-            """{ "data": { "ebay": { "salesByGrade": { "psa10": { "count": 1, "averagePrice": 99.0 } } } } }"""
+            """
+            {
+              "data": {
+                "name": "Charizard",
+                "setName": "Base Set",
+                "ebay": {
+                  "salesByGrade": {
+                    "psa10": { "count": 1, "medianPrice": 17500, "lastSaleDate": "2025-10-30T00:00:00.000Z" },
+                    "psa9": { "count": 19, "medianPrice": 2487.5, "lastSaleDate": "2026-07-30T00:00:00.000Z" }
+                  },
+                  "soldListings": { "psa9": [ { "price": 2200, "soldDate": "2026-01-01T00:00:00.000Z", "grade": 9 } ] },
+                  "totalSales": 415,
+                  "salesVelocity": { "dailyAverage": 0.6, "monthlyTotal": 18 }
+                }
+              }
+            }
+            """
         )
 
-        assertEquals(listOf(PriceRow("PSA 10", 99.0, salesCount = 1)), response.toGradedPriceSection()?.rows)
+        assertEquals(
+            listOf(PriceRow("PSA 10", 17500.0, salesCount = 1), PriceRow("PSA 9", 2487.5, salesCount = 19)),
+            response.toGradedPriceSection()?.rows,
+        )
     }
 
     @Test
@@ -112,7 +132,8 @@ class CardMapperTest {
     @Test
     fun `labels are readable`() {
         assertEquals("PSA 10", "psa10".toGradeLabel())
-        assertEquals("CGC 9.5", "cgc9.5".toGradeLabel())
+        assertEquals("CGC 9.5", "cgc9_5".toGradeLabel())
+        assertEquals("BGS 10", "bgs10".toGradeLabel())
         assertEquals("raw", "raw".toGradeLabel())
         assertEquals("Reverse Holofoil", "reverse-holofoil".toPrintingLabel())
     }
@@ -158,7 +179,7 @@ class CardMapperTest {
                     "updatedAt": "2025-08-01",
                     "salesByGrade": {
                       "psa8": { "count": 8, "medianPrice": 450.0 },
-                      "bgs9.5": { "count": 2, "averagePrice": 1200.0 },
+                      "bgs9_5": { "count": 2, "averagePrice": 1200.0 },
                       "psa10": { "count": 12, "averagePrice": 3000.0, "smartMarketPrice": { "price": 3150.0, "confidence": "high" } },
                       "psa9": { "count": 30, "marketPrice7Day": 900.0, "averagePrice": 950.0 },
                       "psa7": { "count": 0 }

@@ -26,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -172,7 +173,7 @@ private fun PriceRows(section: PriceSection) {
             Text(row.label, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
             row.salesCount?.let { count ->
                 Text(
-                    text = stringResource(R.string.sales_count, count),
+                    text = pluralStringResource(R.plurals.sales_count, count, count),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(end = 12.dp),

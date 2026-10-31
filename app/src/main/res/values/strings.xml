@@ -14,7 +14,10 @@
     <string name="graded_missing_api_key">Add a free PokemonPriceTracker API key as PRICE_TRACKER_API_KEY in local.properties to see PSA graded prices.</string>
     <string name="graded_not_available">No graded sales found for this card.</string>
     <string name="graded_error">Couldn\'t load graded prices.</string>
-    <string name="sales_count">%1$d sold</string>
+    <plurals name="sales_count">
+        <item quantity="one">%1$d sale</item>
+        <item quantity="other">%1$d sales</item>
+    </plurals>
 
     <string name="retry">Retry</string>
 </resources>

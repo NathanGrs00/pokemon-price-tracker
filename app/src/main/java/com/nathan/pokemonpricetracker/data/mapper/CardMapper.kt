@@ -93,13 +93,13 @@ private inline fun <reified T> JsonObject?.decodeObjectValues(): Map<String, T> 
         .filterValues { it is JsonObject }
         .mapValues { (_, value) -> ApiClient.json.decodeFromJsonElement<T>(value) }
 
-private val gradeKey = Regex("""([a-z]+)[\s_-]?(\d+(?:\.\d+)?)""", RegexOption.IGNORE_CASE)
+private val gradeKey = Regex("""([a-z]+)(\d+)(?:[_.](\d+))?""", RegexOption.IGNORE_CASE)
 
-/** "psa10" -> "PSA 10", "bgs9.5" -> "BGS 9.5". Unknown formats are kept as they are. */
+/** "psa10" -> "PSA 10", "cgc9_5" -> "CGC 9.5". Unknown formats are kept as they are. */
 internal fun String.toGradeLabel(): String {
     val match = gradeKey.matchEntire(this) ?: return this
-    val (grader, grade) = match.destructured
-    return "${grader.uppercase()} $grade"
+    val (grader, grade, half) = match.destructured
+    return "${grader.uppercase()} $grade" + if (half.isEmpty()) "" else ".$half"
 }
 
 private fun PriceRow.gradeNumber(): Double = label.substringAfterLast(' ').toDoubleOrNull() ?: 0.0
